@@ -1,0 +1,64 @@
+{% extends 'layout.html' %}
+{% block title %}{{title}}{% endblock title %}
+{% block content %}
+    <div class="container d-flex justify-content-center align-items-center" >
+        <div class class="col-md-6 col-lg-4">
+            <form action="" method="POST" class="px-4 py-3 my-3 border rounded bg-light">
+                <!-- CSRF Token -->
+                {{form.hidden_tag()}}
+                <fieldset>
+                    <legend >Edit Subjects Here!</legend>
+                    <div >
+                        {{form.code.label(class="form-label")}}
+                        {% if form.code.errors %}
+                            {{form.code()}}
+                            <div>
+                                {% for error in form.code.errors %}
+                                    <span class="text-muted">{{error}}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{form.code()}}
+                        {% endif %}
+                    </div>
+                    <div >
+                        {{form.name.label(class="form-label")}}
+                        {% if form.name.errors %}
+                            {{form.name(class="form-control is-invalid")}}
+                            <div>
+                                {% for error in form.name.errors %}
+                                    <span class="text-muted">{{error}}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{form.name(class="form-control")}}
+                        {% endif %}
+                    </div>
+                    <div >
+                        {{ form.description.label(class="form-label") }}
+                        {% if form.description.errors %}
+                            {{ form.description(class="form-control is-invalid") }}
+                            <div>
+                                {% for error in form.description.errors %}
+                                    <span class="text-muted">{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.description(class="form-control") }}
+                        {% endif %}
+                    </div>
+                </fieldset>
+                <div >
+                    {{form.save(class="btn btn-outline-info")}}
+                </div>
+            </form>
+            <!-- <div>
+                <small class = "text-muted">
+                    Don't Have An Account? <a class = "ml-2" href="{{url_for('register')}}">Sign Up</a>
+                </small>
+            </div> -->
+        </div>
+    
+        </div>
+        
+{% endblock content %}

@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+{% block title %}Quiz{% endblock title %}
+
+{% block content %}
+    <div class="container">
+        <center>
+            <div class="d-flex flex-column justify-space-between align-items-center">
+                <div class="mt-3">
+                    <h2>Quiz Details</h2>
+                </div>
+                <div class="mt-5 border border-dark p-3 w-50">
+                    <p><b>Id </b>: {{quiz.quiz_id}}</p>
+                    <p><b>Subject</b> : {{subject.subject_name}}</p>
+                    <p><b>Chapter</b> : {{chapter.chapter_name}}</p>
+                    <p><b>Number of Questions</b> : {{quiz.questions | length}}</p>
+                    <p><b>Scheduled Date</b> : {{quiz.quiz_date}}</p>
+                    <p><b>Duration(in mins)</b> : {{quiz.time_duration}}</p>
+                </div>
+            </div>
+            
+        </center>
+    </div>
+{% endblock content %}

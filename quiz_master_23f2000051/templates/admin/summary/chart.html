@@ -1,0 +1,82 @@
+{% extends 'layout.html' %}
+{% block title %}{{title}}{% endblock title %}
+
+{% block content %}
+
+<body>
+    <div class="container-fluid">
+       <div class="container">
+        <center><h2>Summary Charts</h2></center>
+        <div class="mb-4 mt-4 d-flex flex-column justify-space-between">
+            <div class="w-50 mx-auto">
+                <h3>Chart 1</h3>
+                <small><b>Subject Wise Top Scorers</b></small>
+                <canvas id="myChart1"></canvas>
+            </div> 
+            <hr>
+            <div class="w-50 mx-auto">
+                <h3>Chart 2</h3>
+                <small><b>
+                    Subject Wise Users Attempts
+                </b></small>
+                <canvas id="myChart2"></canvas>
+            </div> 
+        </div>
+       </div>     
+    </div>
+    
+      
+</body>
+
+{% endblock content %}
+
+{% block scripts %}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  const ctx = document.getElementById('myChart2');
+  const ctx1 = document.getElementById('myChart1');
+
+  new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels:{{sub_names | safe}},
+      datasets: [{
+        label: 'Number of Users Attempted',
+        data: {{sub_users}},
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
+  new Chart(ctx1, {
+    type: 'bar',
+    data: {
+      labels:{{sub_names | safe}},
+      datasets: [{
+        label: 'Number of Top Scorers',
+        data: {{top_users}},
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
+</script>
+ 
+
+{% endblock scripts %}

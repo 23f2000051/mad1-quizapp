@@ -1,0 +1,81 @@
+{% extends 'layout.html' %}
+
+{% block title %}Admin-Dashboard{% endblock title %}
+<style>
+    .card {
+        margin: 10px;
+        padding: 10px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .table-header {
+        background-color: #f8f9fa;
+    }
+
+    .table-row {
+        background-color: #f8f9fa;
+    }
+
+    .table-body {
+        background-color: #f8f9fa;
+    }
+
+    .table {
+        margin-top: 10px;
+    }
+</style>
+
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Admin-Dashboard</h1>
+            <p>Welcome to the Admin-Dashboard. Here you can manage the quizzes and the users.</p>
+        </div>
+    </div>
+    <div class="row">
+        {%for subject in subjects%}
+        <div class="col-md-6 my-4">
+            <div class = "card">
+                <div class = "card-header">
+                    <a href="/subject/view/{{subject.subject_id}}"><h4>{{subject.subject_name}}</h4></a>
+                </div>
+                <table class="table text-center">
+                    <thead class="table-header">   
+                        <tr>
+                            <th>Chapter Name</th>
+                            <th>No. of Quizzes</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-body">
+                        {% if subject.chapters %}
+                    {% for chapter in subject.chapters %}
+                    <tr class="table-row">
+                        <td><a href="/view/chapter/{{chapter.chapter_id}}">{{chapter.chapter_name}}</a></td>
+                        <td>{{chapter.quizzes | length}}</td>
+                        <td><a class="btn btn-secondary" href="/update/chapter/{{chapter.chapter_id}}">Edit</a> | <a class="btn btn-danger"  href="/delete/chapter/{{chapter.chapter_id}}">Delete</a></td>
+                    </tr>
+                    {% endfor %}
+                    {% else %}
+                    <tr>
+                        <td colspan="3">No Chapters Found</td>
+                    </tr>
+                    {% endif %}
+                    </tbody>
+                </table>
+                <a href="/subject/{{subject.subject_id}}/add_chapter" class="btn btn-warning w-25">Add Chapters+</a>
+            </div>
+        </div>
+        {% endfor %}
+        <div class="mt-4">
+            <center>
+                <a href="/add_subject" class="btn btn-warning w-15">Add Subjects+</a>
+            </center>
+        </div>
+        
+    </div>
+{% endblock content %}

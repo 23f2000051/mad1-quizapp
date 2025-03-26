@@ -1,0 +1,26 @@
+{% extends 'layout.html' %}
+{% block title %} {{title}} {% endblock title %}
+
+{% block content %}
+<div class="container">
+ <center class="mt-5">
+    <h2>Quiz Ended Buddy</h2>
+    <p>Score : {{scores}}</p>
+    <small>Redirecting you to homepage... <a onclick="stopTimer" href="/user_dashboard">Click Here</a> if didn't got Redirected.</small>
+ </center>
+</div>
+    
+{% endblock content %}
+
+{% block scripts %}
+<script>
+    const timer = setTimeout(() => {
+        window.location.href = "/user_dashboard";
+    }, 4000);   
+
+    function stopTimer(){
+        clearTimeout(timer);
+    }
+
+</script>
+{%endblock scripts%}

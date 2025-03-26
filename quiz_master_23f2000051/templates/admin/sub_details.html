@@ -1,0 +1,91 @@
+{% extends 'layout.html' %}
+{% block title %}  {% endblock title %}
+
+{% block content %}
+<div class="container mx-auto">
+    <h2>{{subject.subject_code}}</h2>
+    <h6>{{subject.subject_name}}</h6>
+    <br><br>
+    <div>
+        <p>
+            {{subject.subject_description}}
+        </p>
+    </div>
+    <div>
+        <a class="btn btn-secondary" href="/subject/update/{{subject.subject_id}}">Edit</a>
+        <a class="btn btn-danger" href="/subject/delete/{{subject.subject_id}}">Delete</a>
+    </div>
+    <a class="btn btn-dark mt-3" href="/admin/dashboard">Go Back</a>
+</div>
+
+    <hr>
+    <div class="container mx-auto"> 
+
+        {% if subject.chapters %}
+        <h2 class="my-3">Chapters: - </h2>
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">S No.</th>
+                <th scope="col">Chapter Name</th>
+                <th scope="col" >Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for chapter in subject.chapters %}
+                <div>
+                    
+                        <tr>
+                          <th scope="row">{{subject.chapters.index(chapter)+1}}</th>
+                          <td>{{chapter.chapter_name}}</td>
+                          <td>                
+                            <a class="btn btn-secondary" href="/view/chapter/{{chapter.chapter_id}}">View Details</a>
+                            <a class="btn btn-danger" href="/delete/chapter/{{chapter.chapter_id}}">Delete</a> </td>
+                        </tr>
+                </div>
+                </tbody>
+                </table>
+            {% endfor %}
+            <a class="btn btn-warning m-3" href="/subject/{{subject.subject_id}}/add_chapter">Add Chapters.</a>
+        {% else %}
+            <small><h2>No Chapters Found!!</h2></small>
+            <a class="btn btn-warning" href="/subject/{{subject.subject_id}}/add_chapter">Add Chapters.</a>
+        {% endif %}
+
+        
+    </div>
+
+
+{% endblock content %}
+
+
+
+<!-- <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Handle</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td colspan="2">Larry the Bird</td>
+      <td>@twitter</td>
+    </tr>
+  </tbody>
+</table> -->

@@ -1,0 +1,125 @@
+{% extends 'layout.html' %}
+{% block title %}{{title}}{% endblock title %}
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center">
+    <div class="col-md-6 col-lg-4">
+        <form action="" method="POST" class="px-4 py-3 my-3 border rounded bg-light">
+            <!-- CSRF Token -->
+            {{form.hidden_tag()}}
+            <fieldset>
+                <legend >Update Question Here!</legend>
+                <div >
+                    {{form.title.label(class="form-label")}}
+                    {% if form.title.errors %}
+                        {{form.title(class="form-control is-invalid")}}
+                        <div>
+                            {% for error in form.title.errors %}
+                                <span class="text-muted">{{error}}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{form.title(class="form-control")}}
+                    {% endif %}
+                </div>
+                <div >
+                    {{form.statement.label(class="form-label")}}
+                    {% if form.statement.errors %}
+                        {{form.statement(class="form-control is-invalid")}}
+                        <div>
+                            {% for error in form.statement.errors %}
+                                <span class="text-muted">{{error}}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{form.statement(class="form-control")}}
+                    {% endif %}
+                </div>
+                <div >
+                    {{ form.option1.label(class="form-label") }}
+                    {% if form.option1.errors %}
+                        {{ form.option1(class="form-control is-invalid") }}
+                        <div>
+                            {% for error in form.option1.errors %}
+                                <span class="text-muted">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.option1(class="form-control") }}
+                    {% endif %}
+                </div>
+                <div >
+                    {{ form.option2.label(class="form-label") }}
+                    {% if form.option2.errors %}
+                        {{ form.option2(class="form-control is-invalid") }}
+                        <div>
+                            {% for error in form.option2.errors %}
+                                <span class="text-muted">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.option2(class="form-control") }}
+                    {% endif %}
+                </div>
+                <div >
+                    {{ form.option3.label(class="form-label") }}
+                    {% if form.option3.errors %}
+                        {{ form.option3(class="form-control is-invalid") }}
+                        <div>
+                            {% for error in form.option3.errors %}
+                                <span class="text-muted">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.option3(class="form-control") }}
+                    {% endif %}
+                </div>
+                <div >
+                    {{ form.option4.label(class="form-label") }}
+                    {% if form.option4.errors %}
+                        {{ form.option4(class="form-control is-invalid") }}
+                        <div>
+                            {% for error in form.option4.errors %}
+                                <span class="text-muted">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.option4(class="form-control") }}
+                    {% endif %}
+                </div>
+                <div >
+                    {{ form.answer.label(class="form-label") }}
+                    {% if form.answer.errors %}
+                        {{ form.answer(class="form-control is-invalid") }}
+                        <div>
+                            {% for error in form.answer.errors %}
+                                <span class="text-muted">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.answer(class="form-control") }}
+                    {% endif %}
+                </div>
+                <div >
+                    {{ form.marks.label(class="form-label") }}
+                    {% if form.marks.errors %}
+                        {{ form.marks(class="form-control is-invalid") }}
+                        <div>
+                            {% for error in form.marks.errors %}
+                                <span class="text-muted">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.marks(class="form-control") }}
+                    {% endif %}
+                </div>
+            </fieldset>
+            <div >
+                {{form.save(class="btn btn-outline-info")}}
+                <a href="/view/quiz/{{quiz_id}}"  class="btn btn-outline-info">Close</a>
+            </div>
+        </form>
+    </div>
+
+    </div>
+        
+{% endblock content %}

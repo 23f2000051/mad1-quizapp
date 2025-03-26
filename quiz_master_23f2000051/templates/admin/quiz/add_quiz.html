@@ -1,0 +1,58 @@
+{% extends 'layout.html' %}
+{% block title %}{{title}}{% endblock title %}
+{% block content %}
+    <div class="container d-flex justify-content-center align-items-center">
+        <div class="col-md-6 col-lg-4">
+            <form action="" method="POST" class="px-4 py-3 my-3 border rounded bg-light">
+                <!-- CSRF Token -->
+                {{form.hidden_tag()}}
+                <fieldset>
+                    <legend >Add Quiz Here!</legend>
+                    <div >
+                        {{form.name.label(class = "form-label")}}
+                        {% if form.name.errors %}
+                            {{form.name(class = "form-control is-invalid")}}
+                            <div>
+                                {% for error in form.name.errors %}
+                                    <span class="text-muted">{{error}}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{form.name(class = "form-control")}}
+                        {% endif %}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.date.label(class="form-label") }}
+                        {% if form.name.errors %}
+                            {{ form.date(class="form-control is-invalid") }}
+                            <div>
+                                {% for error in form.quiz_date.errors %}
+                                    <span class="text-muted">{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.date(class="form-control") }}
+                        {% endif %}
+                    </div>
+                    <div >
+                        {{ form.time.label(class = "form-label") }}
+                        {% if form.time.errors %}
+                            {{ form.time(class = "form-control is-invalid") }}
+                            <div>
+                                {% for error in form.time.errors %}
+                                    <span class="text-muted">{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.time(class = "form-control") }}
+                        {% endif %}
+                    </div>
+                </fieldset>
+                <div >
+                    {{form.save(class="btn btn-outline-info")}}
+                </div>
+            </form>
+    
+        </div>
+        
+{% endblock content %}

@@ -1,0 +1,122 @@
+{% extends 'layout.html' %}
+{% block title %}{{title}}{% endblock title %}
+
+{% block content %}
+    <div class ="container-fluid">
+        <div class="container">
+            {%if title == "Subject"%}
+                <h2>Search-Subjects</h2>
+                {% if subjects%}
+                <div class="row">
+                    {%for i in range(subjects|length)%}
+                        <div class="col-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4>{{subjects[i].subject_name}}</h4>
+                                </div>
+                                <div class="card-body">
+                                    <p><b>Subject Description: </b>{{subjects[i].subject_description}}</p>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">
+                                                    Chapters
+                                                </th>
+                                                <th scope="col">
+                                                    No. of Quizzes
+                                                </th>
+                                                <th scope="col">
+                                                    Action
+                                                </th>
+                                            </tr>
+                                            
+                                        </thead>
+                                        <tbody>
+                                            {%if chapters%}
+                                               {%for j in range(chapters[i]|length)%}
+                                               <tr>
+                                                <td>{{chapters[i][j].chapter_name}}</td>
+                                                <td>{{chapters[i][j].quizzes|length}}</td>
+                                                <td><a href="#">View</a></td>
+                                               </tr>
+                                               {%endfor%} 
+                                            {%else%}
+                                            {%endif%}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    {%endfor%}
+                </div>
+                    
+                {%else%}
+                    <h3>No Subjects Found</h3>
+                {%endif%}
+            {%elif title == "Chapter"%}
+                {%if chapters%}
+                    <h2>Search-Chapters</h2>
+                    <div class="row">
+                        {%for i in range(chapters|length)%}
+                            <div class="col-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4>{{chapters[i].chapter_name}}</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>{{chapters[i].chapter_description}}</p>
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">
+                                                        Quizzes
+                                                    </th>
+                                                    <th scope="col">
+                                                        Action
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {%if quizzes%}
+                                                    {%for j in range(quizzes[i]|length)%}
+                                                        <tr>
+                                                            <td>{{quizzes[i][j].quiz_name}}</td>
+                                                            <td><a href="/user_view/quiz/{{quizzes[i][j].quiz_id}}">View</a></td>
+                                                        </tr>
+                                                    {%endfor%}
+                                                {%else%}
+                                                {%endif%}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        {%endfor%}
+                    </div>
+                {%else%}
+                    <h3>No Chapters Found</h3>
+                {%endif%}
+            {%else%}
+                {%if scores%}
+                    <h2>Search-Scores : {{scores[0].total_marks_scored}}</h2>
+                    <div class="row">
+                        {%for quiz in quizzes%}
+                            <div class="col-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4>{{quiz.quiz_name}}</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <a href="/user_view/quiz/{{quiz.quiz_id}}">Details</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {%endfor%}
+                    </div>  
+                {%else%}
+                <h3>No Scores Found</h3>
+                {%endif%}
+            {%endif%}
+        </div>
+    </div>
+{% endblock content %}

@@ -1,0 +1,43 @@
+{% extends 'layout.html' %}
+{% block title %}  {% endblock title %}
+
+{% block content %}
+<div class="container py-5">
+    <center>
+        <div class="d-flex flex-column align-items-center border border-black py-3 mx-auto w-50">
+            <h6>{{question.title}}</h6>
+        <br><br>
+        <div>
+            <p>
+                <b>Statement : </b>{{question.statement}}
+            </p>
+            <div>
+                <p>
+                    <b>Option 1 : </b>{{question.option1}}
+                </p>
+                <p>
+                    <b>Option 2 : </b>{{question.option2}}
+                </p>
+                <p>
+                    <b>Option 3 : </b>{{question.option3}}
+                </p>
+                <p>
+                    <b>Option 4 : </b>{{question.option4}}
+                </p>
+            </div>
+            <div>
+                <p>
+                    <b>Correct Option : </b>{{question.answer}}
+                </p>
+                <p><b>Marks : </b>{{question.marks}}</p>
+            </div>
+        </div>
+        <div>
+            <a href="/update/question/{{question.question_id}}" class="btn btn-secondary">Edit</a>
+            <a href="/delete/question/{{question.question_id}}" class="btn btn-danger">Delete</a>
+        </div>
+        </div>
+    
+    </center>
+</div>
+{% endblock content%}

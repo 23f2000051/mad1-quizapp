@@ -1,0 +1,92 @@
+{% extends 'layout.html' %}
+{% block title %}{{title}}{% endblock title %}
+
+{% block content %}
+<div class="container">
+    {% if users%}
+        <h2 class="my-3">
+            Users
+        </h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Username</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {%for user in users%}
+                <tr>
+                    <td>{{user.username}}</td>
+                    <td>{{user.name}}</td>
+                    <td>{{user.email}}</td>
+                    {%if user.active and not user.is_admin %} 
+                    <td><a href="admin/block/{{user.user_id}}" class="btn btn-danger">Block</a></td>
+                    {%else%}
+                        {% if not user.is_admin %}
+                            <td><a href="admin/unblock/{{user.user_id}}" class="btn btn-primary">Unblock</a></td>
+                        {% else %}
+                            <td><small><b>No Action</b></small></td>
+                        {% endif %}
+                    {%endif%}
+                </tr>
+            {%endfor%}
+            </tbody>
+        </table>
+        
+    {%elif subjects%}
+    <h2 class="my-3">
+        Subjects
+    </h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Subject Code</th>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for subject in subjects%}
+            <tr>
+                <td><a href="/subject/view/{{subject.subject_id}}" style="text-decoration: none;">{{subject.subject_code}}</a></td>
+                <td>{{subject.subject_name}}</td>
+                <td>{{subject.subject_description}}</td>
+            </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+    {%elif quizzes%}
+    <h2 class="my-3">
+        Quizzes
+    </h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Quiz Code</th>
+                <th scope="col">Name</th>
+                <th scope="col">Alloted Date</th>
+                <th scope="col">Duration</th>
+                <th scope="col">Total Marks</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for quiz in quizzes%}
+            <tr>
+                <td><a href="/view/quiz/{{quiz.quiz_id}}" style="text-decoration: none;">{{quiz.quiz_id}}</a></td>
+                <td>{{quiz.quiz_name}}</td>
+                <td>{{quiz.quiz_date}}</td>
+                <td>{{quiz.time_duration}}</td>
+                <td>{{quiz.total_marks}}</td>
+            </tr>        
+        {%endfor%}
+        </tbody>
+    </table>  
+    {%else%}
+        <h2>Searched Content Not Found</h2>
+        Please try again...
+    {%endif%}
+</div>
+{% endblock content %}

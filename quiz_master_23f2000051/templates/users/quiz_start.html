@@ -1,0 +1,161 @@
+{% extends 'layout.html' %}
+{% block title %}{{title}}{% endblock title %}
+
+{% block styles%}
+
+<style>
+    nav{
+        display: none !important;
+    }
+</style>
+
+{% endblock styles%}
+
+{% block content %}
+
+
+
+<div class="container">
+    <div class="my-3">
+        <div class="my-3">
+            <h1>Quiz</h1>
+        </div>
+        <div id="timer">Time left: {{ time_limit }} seconds</div>
+    </div>
+    <div>
+        <form id="quiz-form" method="POST" class="border border-primary p-3 border-radius-10">
+            <div><h6 id="question_no">Question No: 1</h6>
+            </div>
+            <div class="my-3">
+                <p id="question_statement"><b>{{ questions[0].statement }}</b></p>
+                    <label id="option1">
+                        <input type="radio"  name="option" value="option1"> {{ questions[0].option1 }}
+                    </label><br>
+                    <label id="option2">
+                        <input type="radio"  name="option" value="option2"> {{ questions[0].option2 }}
+                    </label><br>
+                    <label id="option3">
+                        <input type="radio"  name="option" value="option3"> {{ questions[0].option3 }}
+                    </label><br>
+                    <label id="option4">
+                        <input type="radio"  name="option" value="option4"> {{ questions[0].option4 }}
+                    </label><br>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="saveAndNext()">Save & Next</button>
+            <button type="button" class="btn btn-primary" onclick="submitQuiz()">Submit</button>
+        </form>
+    </div>
+</div>
+
+    
+    
+
+{% endblock content %}
+
+{% block scripts %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+   
+
+    function saveAndNext() {
+        const question_statement = document.querySelector('p').textContent;
+        const selected_option = document.querySelector('input[name="option"]:checked').value;
+
+        $.ajax({
+                url: window.location.pathname,
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({ question_statement, selected_option, action: "save_next" }),
+                success: function (response) {
+                    if (response.status === "next") {
+                        renderQuestion(response.question);
+                    }
+                },
+                error: function () {
+                    alert("Failed to save the response. Please try again.");
+                }
+            });
+        }
+
+    function submitQuiz() {
+        $.ajax({
+                url: window.location.pathname,
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({ action: "submit" }),
+                success: function (response) {
+                    if (response.status === "submitted") {
+                        localStorage.setItem("timeLeft", `${(parseInt(timeLimit)-1)}:${60}`);
+                        window.location.href = response.redirect_url;
+                    }
+                },
+                error: function () {
+                    alert("Failed to submit the quiz. Please try again.");
+                }
+            });
+        }
+
+        function renderQuestion(question) {
+            document.getElementById("question_no").innerHTML = 'Question No: '+question["index"]
+            document.getElementById("question_statement").innerText = question["statement"];
+            if(question["answer"]=="option1"){
+                document.getElementById("option1").innerHTML = '<input type="radio"  name="option" value="option1" checked> '+ question["option1"];
+            }else{
+                document.getElementById("option1").innerHTML = '<input type="radio"  name="option" value="option1"> '+ question["option1"];
+            }
+            if(question["answer"]=="option2"){
+                document.getElementById("option2").innerHTML = '<input type="radio"  name="option" value="option2" checked> '+ question["option2"];
+            }else{
+                document.getElementById("option2").innerHTML = '<input type="radio"  name="option" value="option2"> '+ question["option2"];
+            }
+            if(question["answer"]=="option3"){
+                document.getElementById("option3").innerHTML = '<input type="radio"  name="option" value="option3" checked> '+ question["option3"];
+            }else{
+                document.getElementById("option3").innerHTML = '<input type="radio"  name="option" value="option3"> '+ question["option3"];
+            }
+            if(question["answer"]=="option4"){
+                document.getElementById("option4").innerHTML = '<input type="radio"  name="option" value="option4" checked> '+ question["option4"];
+            }else{
+                document.getElementById("option4").innerHTML = '<input type="radio"  name="option" value="option4"> '+ question["option4"];
+            }
+        }
+
+    let timeLimit = "{{ time_left }}";
+    let timeLeft_min = parseInt(timeLimit)-1;
+    let timeLeft_sec = 60;
+    function startTimer() {
+    const timerElement = document.getElementById("timer");
+    const formElement = document.getElementById("quiz-form");
+
+    const savedTime = localStorage.getItem("timeLeft");
+        if (savedTime) {
+            const [savedMin, savedSec] = savedTime.split(":").map(Number);
+            timeLeft_min = savedMin;
+            timeLeft_sec = savedSec;
+        }
+
+    const countdown = setInterval(() => {
+        if (timeLeft_min <= 0 && timeLeft_sec<=0) {
+            clearInterval(countdown);
+            alert("Time is up!");
+            submitQuiz();
+        } else {
+            timerElement.textContent = `Time left: ${timeLeft_min}m:${timeLeft_sec}s seconds`;
+            timeLeft_sec--;
+        }
+        if (timeLeft_sec<=0 && timeLeft_min>1) {
+            timeLeft_min--;
+            timeLeft_sec = 60
+        }
+        localStorage.setItem("timeLeft", `${timeLeft_min}:${timeLeft_sec}`);
+    }, 1000);
+}
+window.onload = startTimer;
+    </script>
+
+
+{% endblock scripts %}
+
+
+
+

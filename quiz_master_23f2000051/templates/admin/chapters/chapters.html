@@ -1,0 +1,55 @@
+{% extends 'layout.html' %}
+{% block title %}  {% endblock title %}
+
+{% block content %}
+<div class="container my-4">
+    <h6>{{chapter.chapter_name}}</h6>
+    <br><br>
+    <div>
+        <p>
+            {{chapter.chapter_description}}
+        </p>
+    </div>
+    <div>
+        <a class = "btn btn-secondary" href="/update/chapter/{{chapter.chapter_id}}">Edit</a>
+        <a class = "btn btn-danger" href="/delete/chapter/{{chapter.chapter_id}}">Delete</a>
+    </div>
+    <a href="/subject/view/{{chapter.subject_id}}" class="btn btn-dark mt-3">Go Back</a>
+</div>
+<hr>
+<div class="container my-2">
+    
+    <div>
+        {% if chapter.quizzes %}
+            <h2>Quizzes: - </h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                      <th scope="col">S No.</th>
+                      <th scope="col">Quiz Name</th>
+                      <th scope="col" >Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                {% for quiz in chapter.quizzes %}
+                    <tr>
+                        <div>
+                            <th scope="row">{{chapter.quizzes.index(quiz)+1}}</th>
+                            <td><a href="/view/quiz/{{quiz.quiz_id}}">{{quiz.quiz_name}}</a></td>
+                            <td><a class="btn btn-danger"  href="/delete/quiz/{{quiz.quiz_id}}">Delete</a> </td>
+                            </div>
+                    </tr>
+            {% endfor %}
+            </tbody>
+            </table>
+            <a class = "btn btn-warning" href="/chapter/{{chapter.chapter_id}}/add_quiz">Add Quizzes.</a>
+        {% else %}
+            <small><h2>No Quiz Found!!</h2></small>
+            <a class = "btn btn-warning" href="/chapter/{{chapter.chapter_id}}/add_quiz">Add Quizzes.</a>
+        {% endif %}
+    </div>
+    
+</div>
+
+
+{% endblock content %}

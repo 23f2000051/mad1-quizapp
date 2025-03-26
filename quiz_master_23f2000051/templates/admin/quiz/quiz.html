@@ -1,0 +1,75 @@
+{% extends 'layout.html' %}
+{% block title %}  {% endblock title %}
+
+{% block content %}
+    
+    <br><br>
+<div class="container my-3">
+    <div>
+        <h6>{{quiz.quiz_name}}</h6>
+        <br>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Maximum Time</th>
+                    <th scope="col">Live Date</th>
+                    <th scope="col">Total Marks</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{quiz.time_duration}}</td>
+                    <td>{{quiz.quiz_date}}</td>
+                    <td>{{Total_marks}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <a href="/update/quiz/{{quiz.quiz_id}}" class="btn btn-secondary">Edit</a>
+        <a href="/delete/quiz/{{quiz.quiz_id}}" class="btn btn-danger">Delete</a>
+    </div>
+    <a href="/view/chapter/{{quiz.chapter_id}}" class="btn btn-dark mt-3">Go Back</a>
+</div>
+
+    <hr>
+    <div class="container my-2">
+        {% if quiz.questions %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">S No.</th>
+                    <th scope="col">Question</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for question in quiz.questions %}
+                <tr>
+                    <td>
+                        {{quiz.questions.index(question)+1}}
+                    </td>
+                    <td>
+                            <a href="/view/question/{{question.question_id}}">{{question.title}}</a>
+
+                    </td>
+
+                    <td>
+                        <a href="/update/question/{{question.question_id}}" class="btn btn-secondary">Update</a>
+                        <a href="/delete/question/{{question.question_id}}" class="btn btn-danger">Delete</a> 
+                    </td>
+                </tr>
+
+            {% endfor %}
+            </tbody>
+        </table>
+
+            <a href="/quiz/{{quiz.quiz_id}}/add_question" class="btn btn-warning">Add Questions.</a>
+        {% else %}
+            <small><h2>No Question Found!!</h2></small>
+            <a href="/quiz/{{quiz.quiz_id}}/add_question" class="btn btn-warning">Add Questions.</a>
+        {% endif %}
+    </div>
+
+
+{% endblock content %}

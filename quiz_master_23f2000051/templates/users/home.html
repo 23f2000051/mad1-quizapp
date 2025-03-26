@@ -1,0 +1,129 @@
+{% extends 'layout.html' %}
+{% block title %}{{title}}{% endblock title %}
+
+{% block content %}
+    <div class="container">
+        <div class="my-3">
+            <h2>Welcome To Dashboard!</h2>
+            <p>Welcome to the QuizMaster Dashboard. Here you can manage the quizzes and the users.</p>
+        </div>
+        <div>
+            <center>
+                <div >
+                    <h4>Live Quizzes</h4>
+                </div>
+            </center>
+            {%if current_quiz %}
+
+            <div>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Quiz_id</th>
+                            <th>Quiz Name</th>
+                            <th>Chapter</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for quiz in current_quiz %}
+                        <tr>
+                            <td>{{quiz.quiz_id}}</td>
+                            <td>{{quiz.quiz_name}}</td>
+                            <td>{{quiz.chapter.chapter_name}}</td>
+                                {%if current_validity[current_quiz.index(quiz)]%}
+                                <td><a href="/user_view/quiz/{{quiz.quiz_id}}">View</a> | <a href="/user_start/quiz/{{quiz.quiz_id}}">Start</a></td>
+                                {%else%}
+                                <td><a href="/user_view/quiz/{{quiz.quiz_id}}">View</a> | <small><b>Quiz Already Taken</b></small></td>
+                                {%endif%}    
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            {%else%}
+
+            <center>
+                <h6 class="my-3">No Quiz Right Now!</h6>
+            </center>
+
+            {%endif%}
+
+            <hr>
+
+            <center>
+                <div class="my-2">
+                    <h4>Upcoming Quizzes</h4>
+                </div>
+            </center>
+            <div>
+            {%if upcoming_quiz %}
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Quiz_id</th>
+                            <th>Quiz Name</th>
+                            <th>Chapter</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for quiz in upcoming_quiz %}
+                        <tr>
+                            <td>{{quiz.quiz_id}}</td>
+                            <td>{{quiz.quiz_name}}</td>
+                            <td>{{quiz.chapter.chapter_name}}</td>
+                            <td><a href="/user_view/quiz/{{quiz.quiz_id}}">View</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {%else%}
+                <center>
+                    <h6 class="my-3">No Upcoming Quiz!</h6>
+                </center>
+            {%endif%}
+            </div>
+        </div>
+<hr>
+        <center>
+            <div class="my-3">
+                <h4>Passed Quizzes</h4>
+            </div>
+        </center>
+        <div>
+        {% if passed_quiz %}
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Quiz_id</th>
+                        <th>Quiz Name</th>
+                        <th>Chapter</th>
+                        <th>Attendance</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for quiz in passed_quiz %}
+                    <tr>
+                        <td>{{quiz.quiz_id}}</td>
+                        <td>{{quiz.quiz_name}}</td>
+                        <td>{{quiz.chapter.chapter_name}}</td>
+                            {%if passed_validity[passed_quiz.index(quiz)]%}
+                            <td><b>P</b></td>
+                            {%else%}
+                            <td><b>A</b></td>
+                            {%endif%}    
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {%else%}
+            <center>
+                <p>All Past Quizzes are Removed!</p>
+            </center>
+            
+        {%endif%}
+        </div>
+    </div>
+{% endblock content %}

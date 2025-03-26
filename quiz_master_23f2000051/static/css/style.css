@@ -1,0 +1,22 @@
+.login-button{
+    width: 100%;
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+}
+
+body{
+  font-family: "Roboto", serif;
+  font-optical-sizing: auto;
+}
+.login_page{
+    background-image: url("/static/bgImage.jpg");
+}
+.reg_page{
+    background-image: url("/static/bgImage.jpg");
+}
+.reg_button{
+    width: 100%;
+}
+.navbar{
+    background-image: url("/static/bgImage.jpg");
+}

@@ -1,0 +1,81 @@
+{% extends 'layout.html' %}
+
+{% block title %}{{title}}{% endblock title %}
+<style>
+    .card {
+        margin: 10px;
+        padding: 10px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .table-header {
+        background-color: #f8f9fa;
+    }
+
+    .table-row {
+        background-color: #f8f9fa;
+    }
+
+    .table-body {
+        background-color: #f8f9fa;
+    }
+
+    .table {
+        margin-top: 10px;
+    }
+</style>
+
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Quizzes</h1>
+            <p>Here you can manage the quizzes and the Questions.</p>
+        </div>
+    </div>
+    <div class="row">
+        {%for i in range(quizzes|length)%}
+        <div class="col-md-6 my-4">
+            <div class = "card">
+                <div class = "card-header">
+                    <a href="/view/quiz/{{quizzes[i].quiz_id}}"><h4>{{quizzes[i].quiz_name}}</h4></a>:-{{chapters[i].chapter_name}}/{{subjects[i].subject_name}}
+                </div>
+                <table class="table text-center">
+                    <thead class="table-header">   
+                        <tr>
+                            <th>Question Id</th>
+                            <th>Title</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-body">
+                        {% if quizzes[i].questions %}
+                    {% for question in quizzes[i].questions %}
+                    <tr class="table-row">
+                        <td>{{question.question_id}}</td>
+                        <td><a href="/view/question/{{question.question_id}}">{{question.title}}</a></td>
+                        <td><a href="/update/question/{{question.question_id}}" class="btn btn-secondary">Edit</a> | <a href="/delete/question/{{question.question_id}}" class="btn btn-danger">Delete</a></td>
+                    </tr>
+                    {% endfor %}
+                    {% else %}
+                    <tr>
+                        <td colspan="3">No Questions Found</td>
+                    </tr>
+                    {% endif %}
+                    </tbody>
+                </table>
+                <a href="/quiz/{{quizzes[i].quiz_id}}/add_question" class="btn btn-warning w-25">Add Questions+</a>
+            </div>
+        </div>
+        {% endfor %}
+        <div class="mt-4">
+            <center>
+                <a href="/quiz_addition" class="btn btn-warning">Add Quiz+</a>
+            </center>
+        </div>
+        
+    </div>
+{% endblock content %}

@@ -1,0 +1,80 @@
+{% extends 'layout.html' %}
+{% block title %}{{title}}{% endblock title %}
+
+{% block content %}
+
+<body>
+    <div class="container-fluid">
+       <div class="container">
+        <div class="mb-4 mt-4 d-flex justify-content-center"><h2>Summary Charts</h2></div>
+            <div class="row">
+                <div class="col-lg-6 col-12">
+                    <h3>Chart 1</h3>
+                    <small><b>Subject Wise No.of Quizzes</b></small>
+                    <canvas id="myChart1"></canvas>
+                </div> 
+                <div class="col-lg-6 col-12">
+                    <h3>Chart 2</h3>
+                    <small><b>Month Wise No.of Quizzes Attempted</b></small>
+                    <canvas id="myChart2"></canvas>
+                </div> 
+            </div> 
+       </div>     
+    </div>
+    
+      
+</body>
+
+{% endblock content %}
+
+{% block scripts %}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  const ctx = document.getElementById('myChart2');
+  const ctx1 = document.getElementById('myChart1');
+
+
+  new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels:["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+      datasets: [{
+        label: 'Number of Quiz Attempted',
+        data: {{months}},
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
+  new Chart(ctx1, {
+    type: 'bar',
+    data: {
+      labels:{{sub_names | safe}},
+      datasets: [{
+        label: 'Number of Quizzes(Per Month)',
+        data: {{sub_counts}},
+        borderWidth: 2
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
+</script>
+ 
+
+{% endblock scripts %}
