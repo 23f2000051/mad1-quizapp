@@ -85,7 +85,7 @@
                 data: JSON.stringify({ action: "submit" }),
                 success: function (response) {
                     if (response.status === "submitted") {
-                        localStorage.setItem("timeLeft", `${(parseInt(timeLimit)-1)}:${60}`);
+                        sessionStorage.setItem("timeLeft", `${(parseInt(timeLimit)-1)}:${60}`);
                         window.location.href = response.redirect_url;
                     }
                 },
@@ -127,7 +127,7 @@
     const timerElement = document.getElementById("timer");
     const formElement = document.getElementById("quiz-form");
 
-    const savedTime = localStorage.getItem("timeLeft");
+    const savedTime = sessionStorage.getItem("timeLeft");
         if (savedTime) {
             const [savedMin, savedSec] = savedTime.split(":").map(Number);
             timeLeft_min = savedMin;
@@ -147,7 +147,7 @@
             timeLeft_min--;
             timeLeft_sec = 60
         }
-        localStorage.setItem("timeLeft", `${timeLeft_min}:${timeLeft_sec}`);
+        sessionStorage.setItem("timeLeft", `${timeLeft_min}:${timeLeft_sec}`);
     }, 1000);
 }
 window.onload = startTimer;
