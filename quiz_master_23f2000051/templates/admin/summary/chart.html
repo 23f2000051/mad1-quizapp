@@ -10,7 +10,7 @@
         <div class="mb-4 mt-4 d-flex flex-column justify-space-between">
             <div class="w-50 mx-auto">
                 <h3>Chart 1</h3>
-                <small><b>Subject Wise Top Scorers</b></small>
+                <small><b>Subject Wise No. of times Top Score Breached</b></small>
                 <canvas id="myChart1"></canvas>
             </div> 
             <hr>
@@ -62,7 +62,7 @@
     data: {
       labels:{{sub_names | safe}},
       datasets: [{
-        label: 'Number of Top Scorers',
+        label: 'Number of Top Scores',
         data: {{top_users}},
         borderWidth: 1
       }]
